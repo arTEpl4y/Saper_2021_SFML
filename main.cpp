@@ -16,13 +16,19 @@ private:
   void setField(int y, int x, bool mina, bool flaga, bool odkryte);
 
 public:
-  MinesweeperBoard(int wiersz, int kolumna);
+  MinesweeperBoard(int wysokosc, int szerokosc);
   void debug_display() const;
 };
 
-MinesweeperBoard::MinesweeperBoard(int wiersz, int kolumna){
-    width = min(wiersz, 100);
-    height = min(kolumna, 100);
+void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryte){
+    board[y][x].hasMine = mina;    
+    board[y][x].hasFlag = flaga;
+    board[y][x].isRevealed = odkryte;
+}
+
+MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc){
+    width = min(szerokosc, 100);
+    height = min(wysokosc, 100);
     Field pole;
     pole.hasMine = false;
     pole.hasFlag = false;
@@ -36,20 +42,15 @@ MinesweeperBoard::MinesweeperBoard(int wiersz, int kolumna){
 
     setField(1, 1, true, true, false);
     setField(2, 1, false, false, true);
-}
-
-void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryte){
-    board[y][x].hasMine = mina;    
-    board[y][x].hasFlag = flaga;
-    board[y][x].isRevealed = odkryte;
+    setField(2, 4, true, false, false);
 }
 
 void MinesweeperBoard::debug_display() const{
   for(int y = 0; y < height; y++){
-      for(int x = 0; x < width; x++){
-        std::cout << "[" << (board[y][x].hasMine ? "M":".") << (board[y][x].hasFlag ? "o":".") << (board[y][x].isRevealed ? "f":".") << "]";
-      }
-      std::cout << std::endl;
+    for(int x = 0; x < width; x++){
+      std::cout << "[" << (board[y][x].hasMine ? "M":".") << (board[y][x].hasFlag ? "o":".") << (board[y][x].isRevealed ? "f":".") << "]";
+    }
+    std::cout << std::endl;
   }
 }
 
@@ -58,7 +59,7 @@ void intro(){
 }
 
 int main(){
-  intro()
-  ;MinesweeperBoard kek = MinesweeperBoard(6, 9) //szerokość, wysokość
-  ;kek.debug_display()
-;}
+  intro();
+  MinesweeperBoard kek = MinesweeperBoard(6, 9); //wysokość, szerokość
+  kek.debug_display();
+}
