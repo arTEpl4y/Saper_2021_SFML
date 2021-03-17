@@ -10,6 +10,7 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
   int maxMines = wysokosc*szerokosc*mode/10;
   int remainingFields = wysokosc*szerokosc;
   srand (time(NULL));
+  stan_gry = RUNNING;
 
   for(int y = 0; y < height; y++){
     for(int x = 0; x < width; x++){     //based
@@ -45,4 +46,10 @@ void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryt
   board[y][x].hasMine = mina;
   board[y][x].hasFlag = flaga;
   board[y][x].isRevealed = odkryte;
+}
+
+void MinesweeperBoard::toggleFlag(int y, int x){
+  if(board[y][x].isRevealed == false && stan_gry == RUNNING && y < height && x < width && y >= 0 && x >= 0){
+    board[y][x].hasFlag = !board[y][x].hasFlag; //negacja
+  }
 }
