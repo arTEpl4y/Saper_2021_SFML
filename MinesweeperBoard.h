@@ -16,12 +16,14 @@ private:
   int width;                // rzeczywista szerokość planszy
   int height;               // rzeczywista wysokość planszy
   int stan_gry;
+  bool pierwszy_ruch;
   
 public:
   MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode);
   void debug_display() const;
   void setField(int y, int x, bool mina, bool flaga, bool odkryte);
   void toggleFlag(int y, int x);
+  void revealField(int y, int x);
 };
 
 #endif

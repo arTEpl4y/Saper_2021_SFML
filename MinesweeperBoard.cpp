@@ -11,6 +11,7 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
   int remainingFields = wysokosc*szerokosc;
   srand (time(NULL));
   stan_gry = RUNNING;
+  pierwszy_ruch = true;
 
   for(int y = 0; y < height; y++){
     for(int x = 0; x < width; x++){     //based
@@ -51,5 +52,30 @@ void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryt
 void MinesweeperBoard::toggleFlag(int y, int x){
   if(board[y][x].isRevealed == false && stan_gry == RUNNING && y < height && x < width && y >= 0 && x >= 0){
     board[y][x].hasFlag = !board[y][x].hasFlag; //negacja
+  }
+}
+
+void MinesweeperBoard::revealField(int y, int x){
+  if(board[y][x].isRevealed == true || y > height || x > width || y < 0 || x < 0 || stan_gry != RUNNING || board[y][x].hasFlag == true){
+  }else{
+    if(board[y][x].isRevealed == false && board[y][x].hasMine == false){
+      board[y][x].isRevealed = !board[y][x].isRevealed;
+    }else{
+      if(pierwszy_ruch == true && board[y][x].hasMine == true){
+        while(true){
+          int x1, y1 = 0;
+          x1 = rand()%width;
+          y1 = rand()%height;
+          if(board[y1][x1].hasMine == false){
+            board[y][x].hasMine = false;
+            board[y1][x1].hasMine = true;
+            break;
+          }
+        }
+        board[y][x].isRevealed = true;
+      }else{
+        stan_gry = FINISHED_LOSS;
+      }
+    }
   }
 }
