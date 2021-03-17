@@ -1,21 +1,35 @@
 #include <iostream>
+#include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 #include "MinesweeperBoard.h"
 
-#define min(x, y) x<y ? x:y
+MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
+  width = std::min(szerokosc, 100);
+  height = std::min(wysokosc, 100);
+  int maxMines = wysokosc*szerokosc*mode/10;
+  int remainingFields = wysokosc*szerokosc;
+  srand (time(NULL));
 
-MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc){
-    width = min(szerokosc, 100);
-    height = min(wysokosc, 100);
-    Field pole;
-    pole.hasMine = false;
-    pole.hasFlag = false;
-    pole.isRevealed = false;
-
-    for(int y = 0; y < height; y++){
-      for(int x = 0; x < width; x++){     //based
-        board[y][x] = pole;
+  for(int y = 0; y < height; y++){
+    for(int x = 0; x < width; x++){     //based
+      if(mode == DEBUG){
+        if(y == 0 || (x == 0 && y%2 == 0) || x == y){
+          setField(y, x, true, false, false);
+        }else{
+          setField(y, x, false, false, false);
+        }
+      }else{
+        if((maxMines > 0 && mode >= rand()%10+1) || remainingFields <= maxMines){
+          setField(y, x, true, false, false);
+          maxMines--;
+        }else{
+          setField(y, x, false, false, false);
+        }
       }
+      remainingFields--;
     }
+  }
 }
 
 void MinesweeperBoard::debug_display() const{
@@ -28,7 +42,7 @@ void MinesweeperBoard::debug_display() const{
 }
 
 void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryte){
-  board[y][x].hasMine = mina;    
+  board[y][x].hasMine = mina;
   board[y][x].hasFlag = flaga;
   board[y][x].isRevealed = odkryte;
 }
