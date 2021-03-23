@@ -16,7 +16,9 @@ private:
   int width;                // rzeczywista szerokość planszy
   int height;               // rzeczywista wysokość planszy
   int stan_gry;
+  int maxMines;
   bool pierwszy_ruch;
+  
   
 public:
   MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode);
@@ -24,6 +26,13 @@ public:
   void setField(int y, int x, bool mina, bool flaga, bool odkryte);
   void toggleFlag(int y, int x);
   void revealField(int y, int x);
+  int getBoardWidth() const;
+  int getBoardHeight() const;
+  int getMineCount() const;
+  int countMines(int y, int x) const;
+  bool hasFlag(int y, int x) const;
+  bool isRevealed(int y, int x) const;
+  GameState getGameState() const;
 };
 
 #endif

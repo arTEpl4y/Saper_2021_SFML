@@ -7,7 +7,7 @@
 MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
   width = std::min(szerokosc, 100);
   height = std::min(wysokosc, 100);
-  int maxMines = wysokosc*szerokosc*mode/10;
+  maxMines = wysokosc*szerokosc*mode/10;
   int remainingFields = wysokosc*szerokosc;
   srand (time(NULL));
   stan_gry = RUNNING;
@@ -17,9 +17,9 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
     for(int x = 0; x < width; x++){     //based
       if(mode == DEBUG){
         if(y == 0 || (x == 0 && y%2 == 0) || x == y){
-          setField(y, x, true, false, false);
+          setField(y, x, true, false, true);
         }else{
-          setField(y, x, false, false, false);
+          setField(y, x, false, false, true);
         }
       }else{
         if((maxMines > 0 && mode >= rand()%10+1) || remainingFields <= maxMines){
@@ -30,6 +30,50 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
         }
       }
       remainingFields--;
+    }
+  }
+}
+
+int MinesweeperBoard::getBoardWidth() const{
+  return width;
+}
+
+int MinesweeperBoard::getBoardHeight() const{
+  return height;
+}
+
+int MinesweeperBoard::getMineCount() const{
+  return maxMines;
+}
+
+int MinesweeperBoard::countMines(int y, int x) const{
+  if(board[y][x].isRevealed == false || y > height || x > width || y < 0 || x < 0){
+    return -1;
+  }else{
+    int number_of_mines = 0;
+    for(int i = -1; i <= 1; i++){
+      for(int j = -1; j <= 1; j++){
+        if((i == 0 && j == 0) || y+i > height || x+j > width || y+i < 0 || x+j < 0){
+          continue;
+        }else{
+          if(board[y+i][x+j].hasMine == true){
+            number_of_mines++;
+          }else{
+            continue;
+          }
+        }
+      }
+    }
+    return number_of_mines;
+  }
+}
+
+bool MinesweeperBoard::hasFlag(int y, int x) const{
+  if(board[y][x].hasFlag == true){
+    return true;
+  }else{
+    if(board[y][x].isRevealed == true || board[y][x].hasFlag == false || y > height || x > width || y < 0 || x < 0){
+      return false;
     }
   }
 }
@@ -78,4 +122,16 @@ void MinesweeperBoard::revealField(int y, int x){
       }
     }
   }
+}
+
+bool MinesweeperBoard::isRevealed(int y, int x) const{
+  if(board[y][x].isRevealed == true){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+GameState MinesweeperBoard::getGameState() const{
+  
 }
