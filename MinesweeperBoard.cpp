@@ -12,6 +12,7 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
   srand (time(NULL));
   stan_gry = RUNNING;
   pierwszy_ruch = true;
+  odkryte_pola = 0;
 
   for(int y = 0; y < height; y++){
     for(int x = 0; x < width; x++){     //based
@@ -32,6 +33,8 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
       remainingFields--;
     }
   }
+  maxMines = wysokosc*szerokosc*mode/10;
+  remainingFields = wysokosc*szerokosc;
 }
 
 int MinesweeperBoard::getBoardWidth() const{
@@ -47,13 +50,13 @@ int MinesweeperBoard::getMineCount() const{
 }
 
 int MinesweeperBoard::countMines(int y, int x) const{
-  if(board[y][x].isRevealed == false || y > height || x > width || y < 0 || x < 0){
+  if(board[y][x].isRevealed == false || isInbounds(y, x) == false){
     return -1;
   }else{
     int number_of_mines = 0;
     for(int i = -1; i <= 1; i++){
       for(int j = -1; j <= 1; j++){
-        if((i == 0 && j == 0) || y+i > height || x+j > width || y+i < 0 || x+j < 0){
+        if((i == 0 && j == 0) || isInbounds(y+i, x+j) == false){
           continue;
         }else{
           if(board[y+i][x+j].hasMine == true){
@@ -72,7 +75,7 @@ bool MinesweeperBoard::hasFlag(int y, int x) const{
   if(board[y][x].hasFlag == true){
     return true;
   }else{
-    if(board[y][x].isRevealed == true || board[y][x].hasFlag == false || y > height || x > width || y < 0 || x < 0){
+    if(board[y][x].isRevealed == true || board[y][x].hasFlag == false || isInbounds(y, x) == false){
       return false;
     }
   }
@@ -94,16 +97,18 @@ void MinesweeperBoard::setField(int y, int x, bool mina, bool flaga, bool odkryt
 }
 
 void MinesweeperBoard::toggleFlag(int y, int x){
-  if(board[y][x].isRevealed == false && stan_gry == RUNNING && y < height && x < width && y >= 0 && x >= 0){
+  if(board[y][x].isRevealed == false && stan_gry == RUNNING && isInbounds(y, x) == true){
     board[y][x].hasFlag = !board[y][x].hasFlag; //negacja
   }
 }
 
 void MinesweeperBoard::revealField(int y, int x){
-  if(board[y][x].isRevealed == true || y > height || x > width || y < 0 || x < 0 || stan_gry != RUNNING || board[y][x].hasFlag == true){
+  if(board[y][x].isRevealed == true || isInbounds(y, x) == false || stan_gry != RUNNING || board[y][x].hasFlag == true){
+    //do nothing
   }else{
     if(board[y][x].isRevealed == false && board[y][x].hasMine == false){
-      board[y][x].isRevealed = !board[y][x].isRevealed;
+      board[y][x].isRevealed = true;
+      odkryte_pola++;
     }else{
       if(pierwszy_ruch == true && board[y][x].hasMine == true){
         while(true){
@@ -132,6 +137,19 @@ bool MinesweeperBoard::isRevealed(int y, int x) const{
   }
 }
 
-GameState MinesweeperBoard::getGameState() const{
-  
+bool MinesweeperBoard::isInbounds(int y, int x) const{
+  if(y > height || x > width || y < 0 || x < 0){
+    return false;
+  }else{
+    return true;
+  }
 }
+
+  // convenience function - returns useful information about field in one function call
+  // if row or col is outside board                         - return '#' character
+  // if the field is not revealed and has a flag            - return 'F' character
+  // if the field is not revealed and does not have a flag  - return '_' (underscore) character
+  // if the field is revealed and has mine                  - return 'x' character
+  // if the field is revealed and has 0 mines around        - return ' ' (space) character
+  // if the field is revealed and has some mines around     - return '1' ... '8' (number of mines as a digit)
+  // // //char getFieldInfo(int row, int col) const;

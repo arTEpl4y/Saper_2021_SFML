@@ -18,7 +18,7 @@ private:
   int stan_gry;
   int maxMines;
   bool pierwszy_ruch;
-  
+  int odkryte_pola;
   
 public:
   MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode);
@@ -32,6 +32,7 @@ public:
   int countMines(int y, int x) const;
   bool hasFlag(int y, int x) const;
   bool isRevealed(int y, int x) const;
+  bool isInbounds(int y, int x) const;
   GameState getGameState() const;
 };
 
