@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "MinesweeperBoard.h"
+#include "Array2D.h"
 
-MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
+MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode):board(width,height){
   width = std::min(szerokosc, 100);
   height = std::min(wysokosc, 100);
   maxMines = wysokosc*szerokosc*mode/10;
@@ -50,7 +51,7 @@ int MinesweeperBoard::getMineCount() const{
 }
 
 int MinesweeperBoard::countMines(int y, int x) const{
-  if(board[y][x].isRevealed == false || isInbounds(y, x) == false){
+  if(isInbounds(y, x) == false || board[y][x].isRevealed == false){
     return -1;
   }else{
     int number_of_mines = 0;

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MinesweeperBoard.h"
+#include "Array2D.h"
 
 void intro(){
   std::cout << "Milosz xxx032" << std::endl;
