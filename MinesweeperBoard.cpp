@@ -170,5 +170,5 @@ char MinesweeperBoard::getFieldInfo(int y, int x) const{
   if(board[y][x].isRevealed == true && countMines(y, x) == 0){
     return ' ';
   }
-  return countMines(y, x);
+  return '0'+countMines(y, x);
 }

@@ -13,5 +13,5 @@ int main(){
   std::cout << kek.countMines(2,9) << std::endl;
   std::cout << kek.countMines(2,1) << std::endl;
   std::cout << kek.countMines(6,7) << std::endl;
-  std::cout << kek.getFieldInfo(6,7) << std::endl;
+  std::cout << kek.getFieldInfo(3,1) << std::endl;
 }
