@@ -122,6 +122,7 @@ void MinesweeperBoard::revealField(int y, int x){
           }
         }
         board[y][x].isRevealed = true;
+        odkryte_pola++;
       }else{
         stan_gry = FINISHED_LOSS;
       }
@@ -143,6 +144,22 @@ bool MinesweeperBoard::isInbounds(int y, int x) const{
   }else{
     return true;
   }
+}
+
+GameState MinesweeperBoard::getGameState() const{
+  if(stan_gry == FINISHED_LOSS){
+    return FINISHED_LOSS;
+  }else{
+    if(width*height == odkryte_pola+maxMines){
+      return FINISHED_WIN;
+    }else{
+      return RUNNING;
+    }
+  }
+}
+
+char MinesweeperBoard::getFieldInfo(int y, int x) const{
+  
 }
 
   // convenience function - returns useful information about field in one function call

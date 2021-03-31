@@ -34,6 +34,7 @@ public:
   bool isRevealed(int y, int x) const;
   bool isInbounds(int y, int x) const;
   GameState getGameState() const;
+  char getFieldInfo(int y, int x) const;
 };
 
 #endif
