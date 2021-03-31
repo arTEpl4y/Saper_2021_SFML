@@ -84,7 +84,7 @@ bool MinesweeperBoard::hasFlag(int y, int x) const{
 void MinesweeperBoard::debug_display() const{
   for(int y = 0; y < height; y++){
     for(int x = 0; x < width; x++){
-      std::cout << "[" << (board[y][x].hasMine ? "M":".") << (board[y][x].hasFlag ? "o":".") << (board[y][x].isRevealed ? "f":".") << "]";
+      std::cout << "[" << (board[y][x].hasMine ? "M":".") << (board[y][x].isRevealed ? "o":".") << (board[y][x].hasFlag ? "f":".") << "]";
     }
     std::cout << std::endl;
   }
@@ -131,11 +131,7 @@ void MinesweeperBoard::revealField(int y, int x){
 }
 
 bool MinesweeperBoard::isRevealed(int y, int x) const{
-  if(board[y][x].isRevealed == true){
-    return true;
-  }else{
-    return false;
-  }
+  return board[y][x].isRevealed;
 }
 
 bool MinesweeperBoard::isInbounds(int y, int x) const{
