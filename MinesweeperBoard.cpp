@@ -159,14 +159,20 @@ GameState MinesweeperBoard::getGameState() const{
 }
 
 char MinesweeperBoard::getFieldInfo(int y, int x) const{
-  
+  if(isInbounds(y, x) == false){
+    return '#';
+  }
+  if(board[y][x].isRevealed == false && board[y][x].hasFlag == true){
+    return 'F';
+  }
+  if(board[y][x].isRevealed == false && board[y][x].hasFlag == false){
+    return '_';
+  }
+  if(board[y][x].isRevealed == true && board[y][x].hasMine == true){
+    return 'x';
+  }
+  if(board[y][x].isRevealed == true && countMines(y, x) == 0){
+    return ' ';
+  }
+  return countMines(y, x);
 }
-
-  // convenience function - returns useful information about field in one function call
-  // if row or col is outside board                         - return '#' character
-  // if the field is not revealed and has a flag            - return 'F' character
-  // if the field is not revealed and does not have a flag  - return '_' (underscore) character
-  // if the field is revealed and has mine                  - return 'x' character
-  // if the field is revealed and has 0 mines around        - return ' ' (space) character
-  // if the field is revealed and has some mines around     - return '1' ... '8' (number of mines as a digit)
-  // // //char getFieldInfo(int row, int col) const;
