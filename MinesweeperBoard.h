@@ -1,5 +1,6 @@
 #ifndef MinesweeperBoard_H
 #define MinesweeperBoard_H
+
 #include "Array2D.h"
 
 enum GameMode {DEBUG, EASY, NORMAL, HARD};

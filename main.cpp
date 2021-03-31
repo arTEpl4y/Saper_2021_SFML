@@ -1,6 +1,8 @@
 #include <iostream>
-#include "MinesweeperBoard.h"
+
 #include "Array2D.h"
+#include "MinesweeperBoard.h"
+#include "MSBoardTextView.h"
 
 void intro(){
   std::cout << "Milosz xxx032" << std::endl;
@@ -9,7 +11,9 @@ void intro(){
 int main(){
   intro();
   MinesweeperBoard kek (10, 10, DEBUG); //wysokość, szerokość
+  MSBoardTextView lol (kek);
   kek.debug_display();
+  lol.display();
   std::cout << kek.countMines(1,0) << std::endl;
   std::cout << kek.countMines(2,9) << std::endl;
   std::cout << kek.countMines(2,1) << std::endl;

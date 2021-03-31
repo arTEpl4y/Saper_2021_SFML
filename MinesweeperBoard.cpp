@@ -2,10 +2,11 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
-#include "MinesweeperBoard.h"
-#include "Array2D.h"
 
-MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode):board(width,height){
+#include "Array2D.h"
+#include "MinesweeperBoard.h"
+
+MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode):board(wysokosc, szerokosc){
   width = std::min(szerokosc, 100);
   height = std::min(wysokosc, 100);
   maxMines = wysokosc*szerokosc*mode/10;
@@ -53,23 +54,19 @@ int MinesweeperBoard::getMineCount() const{
 int MinesweeperBoard::countMines(int y, int x) const{
   if(isInbounds(y, x) == false || board[y][x].isRevealed == false){
     return -1;
-  }else{
-    int number_of_mines = 0;
-    for(int i = -1; i <= 1; i++){
-      for(int j = -1; j <= 1; j++){
-        if((i == 0 && j == 0) || isInbounds(y+i, x+j) == false){
-          continue;
-        }else{
-          if(board[y+i][x+j].hasMine == true){
-            number_of_mines++;
-          }else{
-            continue;
-          }
-        }
+  }
+  int number_of_mines = 0;
+  for(int i = -1; i <= 1; i++){
+    for(int j = -1; j <= 1; j++){
+      if((i == 0 && j == 0) || isInbounds(y+i, x+j) == false){
+        continue;
+      }
+      if(board[y+i][x+j].hasMine == true){
+        number_of_mines++;
       }
     }
-    return number_of_mines;
   }
+  return number_of_mines;
 }
 
 bool MinesweeperBoard::hasFlag(int y, int x) const{
@@ -136,7 +133,7 @@ bool MinesweeperBoard::isRevealed(int y, int x) const{
 }
 
 bool MinesweeperBoard::isInbounds(int y, int x) const{
-  if(y > height || x > width || y < 0 || x < 0){
+  if(y >= height || x >= width || y < 0 || x < 0){
     return false;
   }else{
     return true;

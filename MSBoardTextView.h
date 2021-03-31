@@ -5,9 +5,11 @@
 
 class MSBoardTextView{
 private:
+  MinesweeperBoard &board;
 
 public:
-  MSBoardTextView(MinesweeperBoard &board);
+  MSBoardTextView(MinesweeperBoard &plansza);
+  void display() const;
 };
 
 #endif
