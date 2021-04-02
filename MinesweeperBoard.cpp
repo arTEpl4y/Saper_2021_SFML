@@ -6,7 +6,7 @@
 #include "Array2D.h"
 #include "MinesweeperBoard.h"
 
-MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode):board(wysokosc, szerokosc){
+MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
   width = std::min(szerokosc, 100);
   height = std::min(wysokosc, 100);
   maxMines = wysokosc*szerokosc*mode/10;

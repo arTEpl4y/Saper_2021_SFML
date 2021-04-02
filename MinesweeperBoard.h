@@ -14,8 +14,8 @@ struct Field{
 
 class MinesweeperBoard{
 private:
-  //Field board[100][100];    // 100-elementowa tablica, 100-elementowych tablic typu Field 
-  Array2D<Field> board;
+  Field board[100][100];    // 100-elementowa tablica, 100-elementowych tablic typu Field 
+  //Array2D<Field> board;
   int width;                // rzeczywista szerokość planszy
   int height;               // rzeczywista wysokość planszy
   int stan_gry;

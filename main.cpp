@@ -13,10 +13,10 @@ int main(){
   MinesweeperBoard kek (10, 10, DEBUG); //wysokość, szerokość
   MSBoardTextView lol (kek);
   kek.debug_display();
-  lol.display();
   std::cout << kek.countMines(1,0) << std::endl;
   std::cout << kek.countMines(2,9) << std::endl;
   std::cout << kek.countMines(2,1) << std::endl;
   std::cout << kek.countMines(6,7) << std::endl;
   std::cout << kek.getFieldInfo(3,1) << std::endl;
+  lol.display();
 }
