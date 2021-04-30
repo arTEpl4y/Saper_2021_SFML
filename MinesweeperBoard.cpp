@@ -20,9 +20,9 @@ MinesweeperBoard::MinesweeperBoard(int wysokosc, int szerokosc, GameMode mode){
     for(int x = 0; x < width; x++){     //based
       if(mode == DEBUG){
         if(y == 0 || (x == 0 && y%2 == 0) || x == y){
-          setField(y, x, true, false, true);
+          setField(y, x, true, false, false);
         }else{
-          setField(y, x, false, false, true);
+          setField(y, x, false, false, false);
         }
       }else{
         if((maxMines > 0 && mode >= rand()%10+1) || remainingFields <= maxMines){

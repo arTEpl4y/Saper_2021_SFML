@@ -22,6 +22,7 @@ private:
   sf::Texture szesc;
   sf::Texture siedem;
   sf::Texture osiem;
+  sf::Texture koniecl;
 
 public:
   MSSFMLView(MinesweeperBoard &plansza);
