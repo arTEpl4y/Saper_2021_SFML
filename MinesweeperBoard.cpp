@@ -73,9 +73,9 @@ bool MinesweeperBoard::hasFlag(int y, int x) const{
   if(board[y][x].hasFlag == true){
     return true;
   }else{
-    if(board[y][x].isRevealed == true || board[y][x].hasFlag == false || isInbounds(y, x) == false){
+    //if(board[y][x].isRevealed == true || board[y][x].hasFlag == false || isInbounds(y, x) == false){
       return false;
-    }
+    //}
   }
 }
 
@@ -105,6 +105,7 @@ void MinesweeperBoard::revealField(int y, int x){
     //do nothing
   }else{
     if(board[y][x].isRevealed == false && board[y][x].hasMine == false){
+      pierwszy_ruch = false;
       board[y][x].isRevealed = true;
       odkryte_pola++;
     }else{
@@ -119,6 +120,7 @@ void MinesweeperBoard::revealField(int y, int x){
             break;
           }
         }
+        pierwszy_ruch = false;
         board[y][x].isRevealed = true;
         odkryte_pola++;
       }else{

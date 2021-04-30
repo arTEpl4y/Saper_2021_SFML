@@ -1,58 +1,25 @@
-#include "SFML/Graphics.hpp"
-#include "SFML/Window.hpp"
+#include <iostream>
 
-// to powinno być w osobnych plikach !
+#include "Array2D.h"
+#include "MinesweeperBoard.h"
+#include "MSBoardTextView.h"
+#include "MSTextController.h"
 
-class MinesweeperBoard
-{
-
-};
-
-class MSSFMLView
-{
-	MinesweeperBoard & board;
-public:
-	explicit MSSFMLView(MinesweeperBoard & b);
-
-	void draw (sf::RenderWindow & win);
-};
-
-MSSFMLView::MSSFMLView(MinesweeperBoard & b) : board(b) {}
-
-void MSSFMLView::draw (sf::RenderWindow & win)
-{
-	// tu robimy rysowanie planszy na podstawie zawartości "board"
-	
-	sf::RectangleShape r;
-	r.setSize ( sf::Vector2f(10, 10) ) ;
-	r.setFillColor ( sf::Color::Red );
-	r.setPosition(100,100);
-	win.draw(r);
+void intro(){
+  std::cout << "Milosz xxx032" << std::endl;
 }
 
+int main(){
+  intro();
+  MinesweeperBoard kek (10, 10, HARD); //wysokość, szerokość
+  MSBoardTextView lol (kek);
+  kek.debug_display();
+  /*std::cout << kek.countMines(1,0) << std::endl;
+  std::cout << kek.countMines(2,9) << std::endl;
+  std::cout << kek.countMines(2,1) << std::endl;
+  std::cout << kek.countMines(6,7) << std::endl;
+  std::cout << kek.getFieldInfo(3,1) << std::endl;*/
+  MSTextController ctrl (kek, lol);
 
-int main()
-{
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Grafika w C++/SFML");
-    window.setVerticalSyncEnabled(false);
-    window.setFramerateLimit(1);
-
-    MinesweeperBoard board;
-	MSSFMLView view(board);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed) 
-                window.close();
-        }
-        
-        window.clear();
-        view.draw(window);
-        window.display();
-    }
-
-  return 0;
-} 
+  ctrl.play();
+}
